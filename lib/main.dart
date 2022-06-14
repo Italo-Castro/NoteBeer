@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:note_beer/screens/dashboard.dart';
+import 'package:note_beer/screens/listNotes.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.yellow,
       ),
-      home:  DashBoard(),
+      home:  ListNotes(),
     );
   }
 }

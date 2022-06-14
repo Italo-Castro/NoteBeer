@@ -15,7 +15,7 @@ class _FormNoteState extends State<FormNote> {
   final TextEditingController _abv = TextEditingController();
   final TextEditingController _obs = TextEditingController();
   final TextEditingController _color = TextEditingController();
-  final TextEditingController _noteVale = TextEditingController();
+  final TextEditingController _noteValue = TextEditingController();
 
   final NoteDao noteDao = NoteDao();
 
@@ -56,7 +56,7 @@ class _FormNoteState extends State<FormNote> {
                 child: ItenFomr(_obs, 'Observation'),
               ), Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: ItenFomr(_noteVale, 'Note'),
+                child: ItenFomr(_noteValue, 'Note'),
               ),
             ],
           ),
@@ -64,7 +64,16 @@ class _FormNoteState extends State<FormNote> {
         ,
       ),
       floatingActionButton: FloatingActionButton(onPressed: () {
-        debugPrint('Ola');
+        final String manufacturer = _manufacturer.text;
+        final String style = _style.text;
+        final String obs = _obs.text;
+        final String color = _color.text;
+        final double? abv = double.tryParse(_abv.text);
+        final double? ibu = double.tryParse(_ibu.text);
+        final int? noteValue = int.tryParse(_noteValue.text);
+
+        final Note newNote = Note(0,manufacturer,style,ibu!,abv!,obs,color,noteValue!);
+        noteDao.save(newNote).then((id) => Navigator.pop(context));
       },
           child: Icon(Icons.wb_cloudy_rounded),),
 
@@ -83,7 +92,6 @@ class ItenFomr extends StatelessWidget {
     return TextField(
       controller: _controller,
       decoration: InputDecoration(labelText: label),
-
     );
   }
 }

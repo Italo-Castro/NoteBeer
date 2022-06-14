@@ -7,6 +7,8 @@ class Note {
    String _obs;
    String _color;
    int    _noteValue;
+
+
   Note(this._id,this._manufacturer, this._style, this._ibu, this._abv, this._obs, this._color, this._noteValue);
 
   String get obs => _obs;
@@ -49,7 +51,7 @@ class Note {
      _ibu = ibu;
    }
 
-   setAbv(double abv) {
+   void setAbv(double abv) {
      _abv = abv;
    }
 
