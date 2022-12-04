@@ -39,6 +39,28 @@ class NoteDao {
     return db.insert(_tableName, noteMap);
   }
 
+
+  Future<int> update (Note note) async {
+
+    final Database db = await getDatabase();
+    final Map<String, dynamic> noteMap = Map();
+    noteMap['$_id'] = note.id;
+    noteMap['$_manufacturer'] = note.manufacturer;
+    noteMap['$_style']  = note.style;
+    noteMap['$_ibu'] = note.ibu;
+    noteMap['$_abv'] = note.abv;
+    noteMap['$_color'] = note.color;
+    noteMap['$_obs'] = note.obs;
+    noteMap['$_noteValue'] = note.noteValue;
+    int updateCount = await db.update(
+        _tableName,
+        noteMap,
+        where: '${_id} = ${note.id}',
+    );
+    return updateCount;
+  }
+
+
   Future<List<Note>> findAll() async {
 
     final Database db = await getDatabase();

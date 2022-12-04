@@ -45,18 +45,21 @@ class _ListNotesState extends State<ListNotes> {
                 return ListView.builder(
                   itemBuilder: (context, index) {
                     final Note note = notes[index];
-                    return _NoteItem(note);
+                    return _NoteItem(note, onClick: (){
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => FormNote(note)));
+                    },);
                   },
                   itemCount: notes.length,
                 );
             }
-
             if (snapshot.data != null) {
               final List<Note> notes = snapshot.data as List<Note>;
               return ListView.builder(
                 itemBuilder: (context, index) {
                   final Note note = notes[index];
-                  return _NoteItem(note);
+                  return _NoteItem(note,onClick: (){
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => FormNote(note)));
+                  },);
                 },
                 itemCount: notes.length,
               );
@@ -69,11 +72,11 @@ class _ListNotesState extends State<ListNotes> {
               ),
             );
           }),
-      floatingActionButton: FloatingActionButton(
+          floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator
               .of(context)
-              .push(MaterialPageRoute(builder: (context) => FormNote())).then((value) => setState(() {}));
+              .push(MaterialPageRoute(builder: (context) => FormNote(new Note(0,'','',0.0,0.0,'','',0))));
         },
         child: Icon(Icons.add),
       ),
@@ -83,8 +86,9 @@ class _ListNotesState extends State<ListNotes> {
 
 class _NoteItem extends StatelessWidget {
   final Note note;
+  final Function onClick;
 
-  _NoteItem(this.note);
+  _NoteItem(this.note,{required this.onClick});
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +96,8 @@ class _NoteItem extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Card(
         child: ListTile(
-          title: Text(note.style),
+          onTap: () => onClick(),
+          title: Text("${note.id} - ${note.style}"),
           subtitle: Text(note.manufacturer),
         ),
       ),
