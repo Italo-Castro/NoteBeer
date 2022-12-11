@@ -1,8 +1,8 @@
 import 'package:note_beer/database/app_database.dart';
 import '../../model/note.dart';
 import 'package:sqflite/sqflite.dart';
-class NoteDao {
 
+class NoteDao {
   static const String _tableName = 'notebeer';
   static const String _id = 'id';
   static const String _manufacturer = 'manufacturer';
@@ -14,22 +14,20 @@ class NoteDao {
   static const String _noteValue = 'note';
 
   final String sqlTable = 'CREATE TABLE $_tableName ('
-    '$_id INTEGER PRIMARY KEY, '
-    '$_manufacturer TEXT, '
-    '$_style TEXT, '
-    '$_ibu DOUBLE, '
-    '$_abv DOUBLE, '
-    '$_obs TEXT, '
-    '$_color TEXT,  '
-    '$_noteValue INTEGER ) ';
+      '$_id INTEGER PRIMARY KEY, '
+      '$_manufacturer TEXT, '
+      '$_style TEXT, '
+      '$_ibu DOUBLE, '
+      '$_abv DOUBLE, '
+      '$_obs TEXT, '
+      '$_color TEXT,  '
+      '$_noteValue INTEGER ) ';
 
-
-  Future<int> save (Note note) async {
-
+  Future<int> save(Note note) async {
     final Database db = await getDatabase();
     final Map<String, dynamic> noteMap = Map();
     noteMap['$_manufacturer'] = note.manufacturer;
-    noteMap['$_style']  = note.style;
+    noteMap['$_style'] = note.style;
     noteMap['$_ibu'] = note.ibu;
     noteMap['$_abv'] = note.abv;
     noteMap['$_color'] = note.color;
@@ -39,51 +37,55 @@ class NoteDao {
     return db.insert(_tableName, noteMap);
   }
 
-
-  Future<int> update (Note note) async {
-
+  Future<int> update(Note note) async {
     final Database db = await getDatabase();
     final Map<String, dynamic> noteMap = Map();
     noteMap['$_id'] = note.id;
     noteMap['$_manufacturer'] = note.manufacturer;
-    noteMap['$_style']  = note.style;
+    noteMap['$_style'] = note.style;
     noteMap['$_ibu'] = note.ibu;
     noteMap['$_abv'] = note.abv;
     noteMap['$_color'] = note.color;
     noteMap['$_obs'] = note.obs;
     noteMap['$_noteValue'] = note.noteValue;
     int updateCount = await db.update(
-        _tableName,
-        noteMap,
-        where: '${_id} = ${note.id}',
+      _tableName,
+      noteMap,
+      where: '${_id} = ${note.id}',
     );
     return updateCount;
   }
 
-
   Future<List<Note>> findAll() async {
-
     final Database db = await getDatabase();
     final List<Map<String, dynamic>> result = await db.query(_tableName);
 
     final List<Note> notes = [];
     for (Map<String, dynamic> row in result) {
-      final Note note = Note(
-      row[_id],
-      row[_manufacturer],
-      row[_style],
-      row[_ibu],
-      row[_abv],
-      row[_obs],
-      row[_color],
-      row[_noteValue]
-     );
+      final Note note = Note(row[_id], row[_manufacturer], row[_style],
+          row[_ibu], row[_abv], row[_obs], row[_color], row[_noteValue]);
       notes.add(note);
     }
     return notes;
   }
 
 
-
+  Future<int> delete(Note note) async {
+    final Database db = await getDatabase();
+   /* final Map<String, dynamic> noteMap = Map();
+    noteMap['$_id'] = note.id;
+    noteMap['$_manufacturer'] = note.manufacturer;
+    noteMap['$_style'] = note.style;
+    noteMap['$_ibu'] = note.ibu;
+    noteMap['$_abv'] = note.abv;
+    noteMap['$_color'] = note.color;
+    noteMap['$_obs'] = note.obs;
+    noteMap['$_noteValue'] = note.noteValue;*/
+    int updateCount = await db.delete(
+      _tableName,
+      where: '${_id} = ${note.id}',
+    );
+    return updateCount;
+  }
 
 }
