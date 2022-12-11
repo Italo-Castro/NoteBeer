@@ -1,9 +1,9 @@
-#NoteBeer 
+# NoteBeer 
 
-##Contexto do projeto
+## Contexto do projeto
 É um simples projeto para avaliação de cervejas.
 
-#Ferramentas utilizadas.
+# Ferramentas utilizadas.
 * ###Flutter
 * ### Dart
 * ### Sqflite
