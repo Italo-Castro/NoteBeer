@@ -4,7 +4,7 @@
 É um simples projeto para avaliação de cervejas.
 
 # Ferramentas utilizadas.
-* ###Flutter
+* ### Flutter
 * ### Dart
 * ### Sqflite
 
